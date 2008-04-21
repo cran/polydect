@@ -1,0 +1,45 @@
+
+R version 2.8.1 (2008-12-22)
+Copyright (C) 2008 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ########## checking local polynomial detector combined with variance estimation and modification precedure ##########
+> library(polydect)
+> set.seed(8054)
+> n=100
+> 
+> ## X is the design points ##
+> X<-c(1:n)/n
+> 
+> ## Y is the observed data ##
+> sigma=0.1 #specify the noise level
+> NS<-rnorm(n,0,sigma)   #generate the noise
+> Y<-c(2/3-2*X[1:floor(n/3)],1+0*X[(floor(n/3)+1):floor(2*n/3)],-2*(X[(floor(2*n/3)+1):(n)]-2/3)*(X[(floor(2*n/3)+1):n]-2))+NS
+> 
+> ## look at the data ##
+> plot(X,Y)
+> 
+> ## x is the set of positions that we are interested in estimation ##
+> x<-X[floor(0.1*n):ceiling(0.9*n)]
+> 
+> ## specify bandwidth ##
+> h0=0.04
+> 
+> ## Since the data does not look to have large slope or curvature, we use kernel detector, which has order 0.
+> 
+> polydect(h0,X,Y,x,0)
+[1] 0.335 0.665
+> 
+> 
